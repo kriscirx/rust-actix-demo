@@ -13,11 +13,15 @@ async fn main() -> std::io::Result<()> {
     .parse()
     .expect("PORT must be a number");
 
-  HttpServer::new(|| {
+  let server = HttpServer::new(|| {
     App::new()
       .route("/hello", web::get().to(cargo_sample::manual_hello))
   })
-  .bind((ip, port))?
-  .run()
-  .await
+  .bind((ip.clone(), port))
+  .unwrap()
+  .run();
+
+  eprintln!("Listening on {}:{}", ip, port);
+
+  server.await
 }
