@@ -5,23 +5,19 @@ use std::env;
 async fn main() -> std::io::Result<()> {
   dotenv::dotenv().ok();
   
-  let ip = env::var("IP")
-    .unwrap_or_else(|_| "0.0.0.0".to_string());
+  let host = env::var("HOST").expect("HOST is not set.");
 
-  let port = env::var("PORT")
-    .unwrap_or_else(|_| "3000".to_string())
-    .parse()
-    .expect("PORT must be a number");
+  let port = env::var("PORT").expect("PORT is not set.");
 
   let server = HttpServer::new(|| {
     App::new()
       .route("/hello", web::get().to(cargo_sample::manual_hello))
   })
-  .bind((ip.clone(), port))
+  .bind(format!("{}:{}", host, port))
   .unwrap()
   .run();
 
-  eprintln!("Listening on {}:{}", ip, port);
+  eprintln!("Listening on {}:{}", host, port);
 
   server.await
 }
