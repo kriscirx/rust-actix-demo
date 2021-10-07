@@ -1,0 +1,1 @@
+web: ./target/release/rust-actix-demo
