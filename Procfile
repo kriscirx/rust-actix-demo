@@ -1,1 +1,1 @@
-web: ./target/release/rust-actix-demo
+web: ./target/release/rust_actix_demo

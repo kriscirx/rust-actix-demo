@@ -11,7 +11,7 @@ async fn main() -> std::io::Result<()> {
 
   let server = HttpServer::new(|| {
     App::new()
-      .route("/hello", web::get().to(cargo_sample::manual_hello))
+      .route("/hello", web::get().to(rust_actix_demo::manual_hello))
   })
   .bind(format!("{}:{}", host, port))
   .unwrap()
